@@ -37,6 +37,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <SFML/Graphics.hpp>
 using namespace sf;
 
 const int M = 20;
@@ -50,13 +51,13 @@ struct Point {
 a[4], b[4];
 
 int figures[7][4] = {
-  1,3,5,7, // I
-  2,4,5,7, // Z
-  3,5,4,6, // S
-  3,5,4,7, // T
-  2,3,5,7, // L
-  3,5,7,6, // J
-  2,3,4,5, // O
+  1, 3, 5, 7,  // I
+  2, 4, 5, 7,  // Z
+  3, 5, 4, 6,  // S
+  3, 5, 4, 7,  // T
+  2, 3, 5, 7,  // L
+  3, 5, 7, 6,  // J
+  2, 3, 4, 5,  // O
 };
 
 bool check() {
@@ -72,16 +73,16 @@ bool check() {
 
 
 int main() {
-  srand(time(0));     
+  srand(time(0));
   RenderWindow window(VideoMode(320, 480), "The Game!");
-  Texture t1,t2,t3;
-  t1.loadFromFile("images/tiles.png");
-  t2.loadFromFile("images/background.png");
-  t3.loadFromFile("images/frame.png");
+  Texture t1, t2, t3;
+  t1.loadFromFile("images/images/tiles.png");
+  t2.loadFromFile("images/images/background.png");
+  t3.loadFromFile("images/images/frame.png");
   Sprite s(t1), background(t2), frame(t3);
   int dx = 0, colorNum = 1;
   bool rotate = 0;
-  float timer = 0, delay = 0.3; 
+  float timer = 0, delay = 0.3;
   Clock clock;
   while (window.isOpen()) {
     float time = clock.getElapsedTime().asSeconds();
@@ -94,7 +95,7 @@ int main() {
       }
       if (e.type == Event::KeyPressed) {
         if (e.key.code == Keyboard::Up) {
-          rotate=true;
+          rotate = true;
         } else if (e.key.code == Keyboard::Left) {
           dx =- 1;
         } else if (e.key.code == Keyboard::Right) {
@@ -112,29 +113,29 @@ int main() {
     b[i] = a[i];
     a[i].x += dx;
   }
-  if (!check()){
+  if (!check()) {
     for (int i = 0; i < 4; i++) {
-      a[i]=b[i];
+      a[i] = b[i];
     }
   }
 
-  //////Rotate//////
+  ////// Rotate//////
   if (rotate) {
-    Point p = a[1];  //center of rotation
+    Point p = a[1];  // center of rotation
     for (int i = 0; i < 4; i++) {
       int x = a[i].y - p.y;
       int y = a[i].x - p.x;
       a[i].x = p.x - x;
       a[i].y = p.y + y;
     }
-    if (!check()){
+    if (!check()) {
       for (int i = 0; i < 4; i++) {
         a[i] = b[i];
       }
     }
   }
 
-  ///////Tick//////
+  /////// Tick//////
   if (timer > delay) {
     for (int i = 0; i < 4; i++) {
       b[i] = a[i];
@@ -151,10 +152,10 @@ int main() {
         a[i].y = figures[n][i] / 2;
       }
     }
-    timer=0;
+    timer = 0;
   }
 
-  ///////check lines//////////
+  /////// check lines//////////
   int k = M - 1;
   for (int i = M - 1; i > 0; i--) {
     int count = 0;
@@ -164,8 +165,8 @@ int main() {
       }
       field[k][j] = field[i][j];
     }
-    if (count < N){
-      k--:
+    if (count < N) {
+      k--;
     }
   }
 
@@ -173,10 +174,10 @@ int main() {
   rotate = 0;
   delay = 0.3;
 
-  /////////draw//////////
-  window.clear(Color::White);    
+  ///////// draw//////////
+  window.clear(Color::White);
   window.draw(background);
-    
+
   for (int i = 0; i < M; i++) {
     for (int j = 0; j < N; j++) {
       if (field[i][j] == 0) {
