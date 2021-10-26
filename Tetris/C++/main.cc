@@ -76,9 +76,9 @@ int main() {
   srand(time(0));
   RenderWindow window(VideoMode(320, 480), "The Game!");
   Texture t1, t2, t3;
-  t1.loadFromFile("images/images/tiles.png");
-  t2.loadFromFile("images/images/background.png");
-  t3.loadFromFile("images/images/frame.png");
+  t1.loadFromFile("images/tiles.png");
+  t2.loadFromFile("images/background.png");
+  t3.loadFromFile("images/frame.png");
   Sprite s(t1), background(t2), frame(t3);
   int dx = 0, colorNum = 1;
   bool rotate = 0;
