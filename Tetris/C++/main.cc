@@ -38,7 +38,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <SFML/Graphics.hpp>
-using namespace sf;
+// using namespace sf;
 
 const int M = 20;
 const int N = 10;
@@ -74,37 +74,37 @@ bool check() {
 
 int main() {
   srand(time(0));
-  RenderWindow window(VideoMode(320, 480), "The Game!");
-  Texture t1, t2, t3;
+  sf::RenderWindow window(sf::VideoMode(320, 480), "The Game!");
+  sf::Texture t1, t2, t3;
   t1.loadFromFile("images/tiles.png");
   t2.loadFromFile("images/background.png");
   t3.loadFromFile("images/frame.png");
-  Sprite s(t1), background(t2), frame(t3);
+  sf::Sprite s(t1), background(t2), frame(t3);
   int dx = 0, colorNum = 1;
   bool rotate = 0;
   float timer = 0, delay = 0.3;
-  Clock clock;
+  sf::Clock clock;
   while (window.isOpen()) {
     float time = clock.getElapsedTime().asSeconds();
     clock.restart();
     timer += time;
-    Event e;
+    sf::Event e;
     while (window.pollEvent(e)) {
-      if (e.type == Event::Closed) {
+      if (e.type == sf::Event::Closed) {
         window.close();
       }
-      if (e.type == Event::KeyPressed) {
-        if (e.key.code == Keyboard::Up) {
+      if (e.type == sf::Event::KeyPressed) {
+        if (e.key.code == sf::Keyboard::Up) {
           rotate = true;
-        } else if (e.key.code == Keyboard::Left) {
+        } else if (e.key.code == sf::Keyboard::Left) {
           dx =- 1;
-        } else if (e.key.code == Keyboard::Right) {
+        } else if (e.key.code == sf::Keyboard::Right) {
           dx = 1;
         }
       }
     }
 
-  if (Keyboard::isKeyPressed(Keyboard::Down)) {
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
     delay = 0.05;
   }
 
@@ -175,7 +175,7 @@ int main() {
   delay = 0.3;
 
   ///////// draw//////////
-  window.clear(Color::White);
+  window.clear(sf::Color::White);
   window.draw(background);
 
   for (int i = 0; i < M; i++) {
@@ -183,14 +183,14 @@ int main() {
       if (field[i][j] == 0) {
         continue;
       }
-      s.setTextureRect(IntRect(field[i][j] * 18, 0, 18, 18));
+      s.setTextureRect(sf::IntRect(field[i][j] * 18, 0, 18, 18));
       s.setPosition(j * 18, i * 18);
       s.move(28, 31);  // offset
       window.draw(s);
     }
   }
   for (int i = 0; i < 4; i++) {
-    s.setTextureRect(IntRect(colorNum * 18, 0, 18, 18));
+    s.setTextureRect(sf::IntRect(colorNum * 18, 0, 18, 18));
     s.setPosition(a[i].x * 18, a[i].y * 18);
     s.move(28, 31);  // offset
     window.draw(s);
