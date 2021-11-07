@@ -9,5 +9,5 @@ $(EXE):
 clear:
 	rm $(EXE)
 
-run: clear $(EXE)
+run: $(EXE)
 	./$(EXE)
